@@ -27,7 +27,7 @@ public class FundsTransferService {
 
     // Perform transaction
     @Transactional(rollbackOn = OrderException.class)
-    public void createFundTransfer(TransferAccount ac){
+    public void createFundTransfer(TransferAccount ac) throws OrderException{
 
         String transactionid = UUID.randomUUID().toString().substring(0,8);
         // Getting timestamp
@@ -41,15 +41,30 @@ public class FundsTransferService {
 
         System.out.println(">>>>>>>" + getFromAccount1);
         Double getFromAccount2 = repo.getBalancebyId(ac.getToAccountid());
+
+        
         Double amount = ac.getAmmount();
         Double Account1balance = getFromAccount1 - amount;
         Double Account2balance = getFromAccount2 + amount;
-
-        // Updating into account 2;
-        Boolean account1 = repo.updateAccount(Account1balance, ac.getFromAccountid());
-        System.out.println(">>>>>>> account1" + account1);
-        Boolean account2 = repo.updateAccount(Account2balance, ac.getToAccountid());
-        System.out.println(">>>>>> account2" + account2);
+        
+        if(ac.getFromAccountid() == ac.getToAccountid()){
+            if(amount < 0){
+                if(amount == 0){
+                    if(amount > getFromAccount2){
+                        if(amount < 10){
+                            throw new OrderException();
+                        }
+                    }
+                }
+            }
+        } else {
+            // Updating into account 2;
+            Boolean account1 = repo.updateAccount(Account1balance, ac.getFromAccountid());
+            System.out.println(">>>>>>> account1" + account1);
+            Boolean account2 = repo.updateAccount(Account2balance, ac.getToAccountid());
+            System.out.println(">>>>>> account2" + account2);
+        }
+        
     }
 
     

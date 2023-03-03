@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.validation.Valid;
+import sg.edu.nus.iss.day22_workshop.exception.OrderException;
 import sg.edu.nus.iss.day22_workshop.models.TransferAccount;
 import sg.edu.nus.iss.day22_workshop.service.FundsTransferService;
 import sg.edu.nus.iss.day22_workshop.service.LogAuditService;
@@ -23,7 +24,7 @@ public class FundsTransferController {
     private LogAuditService auditservice;
     
     @PostMapping(path = "/postTransfer")
-    public String postForm(@RequestBody MultiValueMap<String, String> form, Model model){
+    public String postForm(@RequestBody MultiValueMap<String, String> form, Model model) throws OrderException{
 
         System.out.println(">>>>>>>> form" + form);
         String fromAccount = form.getFirst("fromAccount");
@@ -31,10 +32,6 @@ public class FundsTransferController {
         String comments = form.getFirst("comments");
         Double amount = Double.parseDouble(form.getFirst("ammount"));
         System.out.println(">>>>>>> amount" + amount);
-
-        // if(result.hasErrors()){
-        //     return "index";
-        // }
         TransferAccount ac = new TransferAccount(fromAccount, toAccount, amount, comments);
         service.createFundTransfer(ac);
         auditservice.insertTransaction(ac);
