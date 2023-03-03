@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .error{
+        color: red;
+    }
+</style>
+<body>
+    <h3>Funds Transfer</h3>
+    <form 
+        action="#"
+        data-th-action="@{/postTransfer}"
+        method="post"
+        data-th-object="${validation}"
+    >
+    <div>
+        <div>
+            <label for="fromAccount">From account: </label>
+                <select name="fromAccount">
+                    <option 
+                        data-th-each="a : ${account}" 
+                        data-th-value="${a.account_id}"
+                        data-th-text="${a.name} + ' (' + ${a.account_id} + ')'"
+                    >
+                    </option>
+                </select>
+            </div>
+            </div>
+        </div>
+        <div>
+            <label for="toAccount">To account: </label>
+            <select name="toAccount">
+                <option 
+                    data-th-each="a : ${account}"
+                    data-th-value="${a.account_id}"
+                    data-th-text="${a.name} + ' (' + ${a.account_id} + ')'"
+                >
+                </option>
+                </div>
+            </select>
+        </div>
+        <div>
+            <input type="hidden" n>
+        </div>
+        <div>
+            <div>
+                <label for="account">Amount:</label>
+                <input type="text" name="ammount" data-th-field="*{ammount}"></input>
+                <p data-th-if="${#fields.hasErrors('ammount')}" data-th-errors="*{ammount}" data-th-errorclass="error"></p>
+            </div>
+        </div>
+        <div>
+            <label for="comments">Comments: </label>
+            <textarea name="comments" id="" cols="30" rows="10" placeholder="type here"></textarea>
+        </div>
+        <div>
+            <button type="submit">Transfer</button>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
