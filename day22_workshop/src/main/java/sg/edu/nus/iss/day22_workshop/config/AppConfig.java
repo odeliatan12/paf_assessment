@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.config;
+package sg.edu.nus.iss.day22_workshop.config;
 
 import java.util.Optional;
 
