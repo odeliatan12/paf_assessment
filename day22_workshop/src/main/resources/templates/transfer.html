@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body data-th-object="${transferaccount}">
+<body>
     <h5>Checkout success!</h5>
     <h5>Yout transfer of 
-        <span data-th-field="*{ammount}"></span>from
-        <span data-th-field="*{fromAccountId}"></span>to
-        <span data-th-field="*{toAccountId}"></span> is successful
+        <span data-th-text="${amount}"></span> from
+        <span data-th-text="${fromAccount}"></span> to
+        <span data-th-text="${toAccount}"></span> is successful
     </h5>
 </body>
 </html>

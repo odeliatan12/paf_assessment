@@ -20,8 +20,8 @@ public class FundsTransferController {
     @Autowired
     private FundsTransferService service;
 
-    @Autowired
-    private LogAuditService auditservice;
+    // @Autowired
+    // private LogAuditService auditservice;
     
     @PostMapping(path = "/postTransfer")
     public String postForm(@RequestBody MultiValueMap<String, String> form, Model model) throws OrderException{
@@ -34,7 +34,10 @@ public class FundsTransferController {
         System.out.println(">>>>>>> amount" + amount);
         TransferAccount ac = new TransferAccount(fromAccount, toAccount, amount, comments);
         service.createFundTransfer(ac);
-        auditservice.insertTransaction(ac);
+        // auditservice.insertTransaction(ac);
+        model.addAttribute("fromAccount", fromAccount);
+        model.addAttribute("toAccount", toAccount);
+        model.addAttribute("amount", amount);
         model.addAttribute("transferaccount", ac);
         return "transfer";
     }
